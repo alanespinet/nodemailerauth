@@ -2,16 +2,21 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const xoauth2 = require('xoauth2');
 
 // nodemailer
 const nodemailer = require('nodemailer');
 const emailConfig = require('./.config.js');
 const transporter = nodemailer.createTransport("SMTP", {
   service: "Gmail",
-  auth: {
-    user: emailConfig.user,
-    pass: emailConfig.pass
-  }
+  auth:{
+            XOAuth2: {
+                user: emailConfig.mailUser,
+                clientId: emailConfig.clientId,
+                clientSecret: emailConfig.clientSecret,
+                refreshToken: emailConfig.refreshToken
+            }
+        }
 });
 
 // globals
